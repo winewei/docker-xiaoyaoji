@@ -5,7 +5,7 @@ RUN tar xf xiaoyaoji-2.1.5.tar.gz
 RUN mv xiaoyaoji-2.1.5 ROOT
 
 #final build
-FROM pristtlt/docker-tomcat:7.0.90
+FROM pristtlt/tomcat:7.0.90
 
 COPY --from=downloader /ROOT ROOT/
 
