@@ -1,0 +1,29 @@
+language: bash
+services: docker
+
+env:
+  - VERSION=2.1.5
+
+install:
+  - echo "skip"
+
+before_script:
+  - env | sort
+  - cd "${VERSION}"
+  - image="${DOCKER_REPO}:${VERSION}"
+
+script:
+  - |
+    (
+      set -Eeuo pipefail
+      set -x
+      docker build -t "$image" .
+    )
+after_script:
+  - docker images
+
+deploy:
+- provider: script
+  script: >- 
+   docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
+   && docker push $image
